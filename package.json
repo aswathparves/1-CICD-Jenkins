@@ -1,0 +1,21 @@
+{
+  "name": "1-cicd-jenkins",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aswathparves/1-CICD-Jenkins.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aswathparves/1-CICD-Jenkins/issues"
+  },
+  "homepage": "https://github.com/aswathparves/1-CICD-Jenkins#readme"
+}
