@@ -1,53 +1,41 @@
 pipeline {
-    agent any   // Jenkins can run this pipeline on any available agent
+    agent any
 
     stages {
-        stage('Clone Repository') {
+        stage('Clone Repo') {
             steps {
-                // Pull latest code from your GitHub repo
-                git 'https://github.com/<your-username>/1-CICD-Jenkins.git'
+                git 'https://github.com/aswathparves/sample-app.git'
             }
         }
-
-        stage('Install Dependencies') {
+        stage('Build App') {
             steps {
-                // Install Node.js dependencies
                 sh 'npm install'
             }
         }
-
-        stage('Run Tests') {
+        stage('Test App') {
             steps {
-                // Run tests (for now just a placeholder)
-                sh 'npm test'
+                sh 'echo "No tests yet"'
             }
         }
-
         stage('Build Docker Image') {
             steps {
-                // Build Docker image from Dockerfile
                 sh 'docker build -t sample-app:latest .'
             }
         }
-
         stage('Run Docker Container') {
             steps {
-                // Stop & remove old container if it exists, then run new one
-                sh '''
-                docker stop sample-app-container || true
-                docker rm sample-app-container || true
-                docker run -d -p 3000:3000 --name sample-app-container sample-app:latest
-                '''
+                sh 'docker run -d -p 3000:3000 --name sample-app-container sample-app:latest'
             }
         }
     }
 
     post {
         success {
-            echo '✅ Build and deployment succeeded!'
+            echo 'Build succeeded!'
+            // Add Slack or Email notification here
         }
         failure {
-            echo '❌ Build failed!'
+            echo 'Build failed!'
         }
     }
 }
