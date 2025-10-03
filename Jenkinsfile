@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Clone Repo') {
             steps {
-                git 'https://github.com/aswathparves/sample-app.git'
+                git 'https://github.com/aswathparves/1-CICD-Jenkins'
             }
         }
         stage('Build App') {
