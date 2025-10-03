@@ -2,11 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Clone Repo') {
-            steps {
-                git 'https://github.com/aswathparves/1-CICD-Jenkins'
-            }
-        }
         stage('Build App') {
             steps {
                 sh 'npm install'
