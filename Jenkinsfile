@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         IMAGE_NAME = "my-node-app"
-        CONTAINER_NAME = "my-node-app"
-        APP_DIR = "/var/jenkins_home/workspace/assessment-1"  // Hardcoded workspace inside Jenkins container
+        CONTAINER_NAME = "node-app"
+        APP_DIR = "/var/jenkins_home/workspace/assessment-1"  // workspace inside Jenkins container
     }
 
     stages {
