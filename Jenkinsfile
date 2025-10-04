@@ -1,34 +1,42 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:18'
-            args '-p 3000:3000 -v /var/run/docker.sock:/var/run/docker.sock'
-        }
+    agent any  // Run checkout on host Jenkins first
+    environment {
+        IMAGE_NAME = "my-node-app"
     }
     stages {
-        stage('Checkout') {
+
+        stage('Checkout Repo') {
             steps {
+                echo "Checking out repository..."
                 checkout scm
             }
         }
-        stage('Build App') {
+
+        stage('Build & Test in Docker') {
+            agent {
+                docker {
+                    image 'node:18'
+                    args '-v /var/run/docker.sock:/var/run/docker.sock'
+                }
+            }
             steps {
+                echo "Installing dependencies..."
                 sh 'npm install'
+
+                echo "Running tests..."
+                sh 'npm test || echo "No tests defined"'
+
+                echo "Building Docker image..."
+                script {
+                    docker.build(env.IMAGE_NAME)
+                }
             }
         }
-        stage('Test App') {
-            steps {
-                sh 'echo "No tests yet"'
-            }
-        }
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t sample-app:latest .'
-            }
-        }
+
         stage('Run Docker Container') {
             steps {
-                sh 'docker run -d -p 3000:3000 --name sample-app-container sample-app:latest'
+                echo "Running Docker container..."
+                sh "docker run -d -p 3000:3000 ${env.IMAGE_NAME}"
             }
         }
     }
