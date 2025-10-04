@@ -53,10 +53,15 @@ pipeline {
     post {
         success {
             echo 'Build succeeded!'
-            // Add Slack or Email notification here
+            mail to: 'aswathparves@gmail.com',
+                 subject: "Jenkins Build Success: ${currentBuild.fullDisplayName}",
+                 body: "Great! Build ${currentBuild.fullDisplayName} succeeded."
         }
         failure {
             echo 'Build failed!'
+            mail to: 'aswathparves@gmail.com',
+                 subject: "Jenkins Build Failed: ${currentBuild.fullDisplayName}",
+                 body: "Oops! Build ${currentBuild.fullDisplayName} failed. Check Jenkins for details."
         }
     }
 }
